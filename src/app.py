@@ -26,7 +26,7 @@ def analyze_text():
     except Exception:
         return jsonify({"error": "Invalid JSON or missing Content-Type header"}), 400
 
-    text = data.get('text', 'Hello Jaggau I love you')
+    text = data.get('text', '')
     if not text:
         return jsonify({"error": "No text provided"}), 400
 

@@ -12,10 +12,10 @@ if not os.path.exists(local_model_path):
         "Please run download_model.py first to download the model."
     )
 
+# Initialize the pipeline without local_files_only parameter
 classifier = pipeline(
-    "text-classification",
+    task="text-classification",
     model=local_model_path,
     tokenizer=local_model_path,
-    top_k=None,  # replaces deprecated return_all_scores=True
-    local_files_only=True  # ensure we only use local files
+    top_k=None  # replaces deprecated return_all_scores=True
 )
