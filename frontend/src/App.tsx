@@ -1,44 +1,32 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './routes/root';
-import EmotionAnalyzer from './components/EmotionAnalyzer';
-import ConversationList from './components/ConversationList';
-import ConversationDetail from './components/ConversationDetail';
-import Dashboard from './components/Dashboard';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { theme } from './utils/theme';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Root from '@routes/Root';
+import Dashboard from '@routes/Dashboard';
+import Conversations from '@routes/Conversations';
+import ConversationDetailPage from '@routes/ConversationDetail';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: 'analyze',
-        element: <EmotionAnalyzer />,
-      },
-      {
-        path: 'conversations',
-        element: <ConversationList />,
-      },
-      {
-        path: 'conversations/:id',
-        element: <ConversationDetail />,
-      }
-    ],
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+    secondary: { main: '#dc004e' }
   },
-]);
+  typography: {
+    fontFamily: 'Inter, system-ui, sans-serif'
+  }
+});
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Root />}>
+            <Route index element={<Dashboard />} />
+            <Route path="conversations" element={<Conversations />} />
+            <Route path="conversations/:id" element={<ConversationDetailPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
-
-export default App;

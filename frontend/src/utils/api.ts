@@ -1,33 +1,38 @@
 import axios from 'axios';
-import type { Conversation, EmotionAnalysis } from '../types';
-
-const BASE_URL = 'http://localhost:5000';
+import { Conversation, ConversationDetail, EmotionAnalytics, ComplianceAnalytics, Analysis }from '../types';
 
 const api = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  baseURL: '/api',
+  headers: { 'Content-Type': 'application/json' }
 });
 
-export const apiClient = {
-  async getConversations() {
-    return api.get<Conversation[]>('/api/conversations');
-  },
-  
-  async getConversation(id: string) {
-    return api.get<Conversation>(`/api/conversations/${id}`);
-  },
-  
-  async analyzeText(text: string) {
-    return api.post<EmotionAnalysis[]>('/api/analyze', { text });
-  },
-  
-  async getEmotionAnalytics() {
-    return api.get('/api/analytics/emotions');
-  },
-  
-  async getComplianceAnalytics() {
-    return api.get('/api/analytics/compliance');
-  }
+export const fetchConversations = async (): Promise<Conversation[]> => {
+  const response = await api.get('/conversations');
+  return response.data;
 };
+
+export const fetchConversation = async (id: string): Promise<ConversationDetail> => {
+  const response = await api.get(`/conversations/${id}`);
+  return response.data;
+};
+
+export const analyzeConversation = async (id: string): Promise<Analysis> => {
+  const response = await api.post(`/conversations/${id}/analyze`);
+  return response.data;
+};
+
+export const fetchEmotionAnalytics = async (): Promise<EmotionAnalytics> => {
+  const response = await api.get('/analytics/emotions');
+  return response.data;
+};
+
+export const fetchComplianceAnalytics = async (): Promise<ComplianceAnalytics> => {
+  const response = await api.get('/analytics/compliance');
+  return response.data;
+};
+
+export const analyzeMessage = async (messageId: number): Promise<{ emotions: { label: string; score: number }[] }> => {
+    const response = await api.post(`/messages/${messageId}/analyze`);
+    return response.data;
+  };
+

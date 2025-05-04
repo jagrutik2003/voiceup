@@ -58,3 +58,37 @@ Thumbs.db
 .vscode
 *.swp
 *.swo
+
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Model files (large, downloadable)
+models/emotion-model/
+
+# Database credentials (if any)
+*.env
+*.ini
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
